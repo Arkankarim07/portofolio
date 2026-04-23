@@ -23,12 +23,14 @@ const certificates = [
 
 export default function CertificatesSection() {
   return (
-    <section className="py-24 bg-primary mt-24">
+    <section className="py-24 bg-[#E5F581] mt-24">
       <div className="container mx-auto px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
           <h2 className="header-font text-3xl md:text-5xl text-black">
-            CERTIFICATES &amp;<br />ACHIEVEMENT
+            CERTIFICATES &amp;
+            <br />
+            ACHIEVEMENT
           </h2>
           <div className="flex gap-4">
             <button className="w-16 h-16 flex items-center justify-center bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-pointer">
@@ -48,10 +50,16 @@ export default function CertificatesSection() {
               className="bg-surface border-4 border-black p-4 space-y-4 hover:-translate-y-2 transition-transform shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
             >
               <div className="aspect-[4/3] bg-zinc-800 border-2 border-black overflow-hidden relative">
-                <img alt="" className="w-full h-full object-cover" src={cert.image} />
+                <img
+                  alt=""
+                  className="w-full h-full object-cover"
+                  src={cert.image}
+                />
               </div>
               <div className="space-y-2">
-                <h4 className="header-font text-xs text-primary">{cert.category}</h4>
+                <h4 className="header-font text-xs text-primary">
+                  {cert.category}
+                </h4>
                 <p className="header-font text-sm leading-tight text-white whitespace-pre-line">
                   {cert.title}
                 </p>
