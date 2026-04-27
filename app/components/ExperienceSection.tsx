@@ -30,15 +30,9 @@ const techStack = [
 
 const experiences = [
   {
-    period: "2023 - PRESENT",
-    title: "LAB ASSISTANT",
-    desc: "Guiding junior students in Computer Science fundamentals and lab procedures at Universitas Gunadarma.",
-    dotColor: "bg-[#A3E635]",
-  },
-  {
-    period: "2022 - 2023",
-    title: "INTERN DEVELOPER",
-    desc: "Developing internal tools and maintaining web modules for local enterprise clients.",
+    period: "2024 - 2025",
+    title: "PT DENSO INTERNSHIP",
+    desc: "6 months internship, position as Product Engineer Developer",
     dotColor: "bg-blue-400",
   },
 ];
@@ -162,7 +156,11 @@ export default function ExperienceSection() {
 
           <div className="max-w-4xl text-black mx-auto tab-content-wrapper">
             {activeTab === "experience" && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8">
+              <div
+                className={`grid grid-cols-1 ${
+                  experiences.length === 1 ? "md:grid-cols-1" : "md:grid-cols-2"
+                } mx-auto gap-10 md:gap-8`}
+              >
                 {experiences.map((exp, i) => (
                   <div
                     key={i}

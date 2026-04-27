@@ -6,10 +6,12 @@ import ProjectsSection from "./components/ProjectsSection";
 import CertificatesSection from "./components/CertificatesSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
+import IntroScreen from "./components/Intro";
 
 export default function Home() {
   return (
     <div className="bg-[#1E2E12] selection:bg-primary selection:text-on-primary-container m-0 p-0 overflow-x-hidden min-h-screen">
+      <IntroScreen />
       <TopNavBar />
       <section id="home">
         <HeroSection />

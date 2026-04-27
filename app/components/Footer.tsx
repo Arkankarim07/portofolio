@@ -4,19 +4,19 @@ const socialLinks = [
   {
     label: "GITHUB",
     href: "#!",
-    icon: <FaGithub />,
+    icon: <FaGithub size={25} />,
     bg: "bg-gray-700",
   },
   {
     label: "LINKEDIN",
     href: "#!",
-    icon: <FaLinkedin />,
+    icon: <FaLinkedin size={25} />,
     bg: "bg-blue-600",
   },
   {
     label: "INSTAGRAM",
     href: "#!",
-    icon: <FaInstagram />,
+    icon: <FaInstagram size={25} />,
     bg: "bg-purple-600",
   },
 ];
@@ -62,15 +62,15 @@ export default function Footer() {
       {/* Bottom Section */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Social Buttons */}
-        <div className="flex gap-4 w-full md:w-auto">
+        <div className="flex gap-2 md:gap-4 w-auto ">
           {socialLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 ${link.bg} text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-bold text-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all`}
+              className={`border flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 ${link.bg} text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-bold text-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all rounded-2xl`}
             >
               {link.icon}
-              <span>{link.label}</span>
+              {/* <span>{link.label}</span> */}
             </a>
           ))}
         </div>

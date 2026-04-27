@@ -101,7 +101,7 @@ export default function HeroSection() {
           <div className="relative w-full aspect-square max-w-md">
             <img
               alt=""
-              className="w-full h-full object-contain filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
+              className="w-full h-full object-contain filter md:grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
               src="/tes.jpeg"
             />
             <div className="bg-[#E5F581] font-rubik absolute -bottom-4 -right-4 bg-primary text-black px-6 py-2 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] header-font text-sm rotate-3 group-hover:rotate-0 transition-all">
