@@ -75,39 +75,37 @@ export default function ExperienceSection() {
         clearProps: "all",
       });
 
-      // 2. Animasi Scroll Project Section
-      // Animasi Putih dari Kiri
-      gsap.fromTo(
-        whiteContainerRef.current,
-        { xPercent: -120 },
-        {
-          xPercent: 0,
-          duration: 1.5, // Atur durasi dalam detik (misal: 1.5 detik)
-          ease: "power4.out", // Pakai power4 agar terasa lebih smooth/premium
+      const createLockingAnimation = (element, vars) => {
+        let anim = gsap.fromTo(element, vars.from, {
+          ...vars.to,
           scrollTrigger: {
             trigger: projectRef.current,
-            start: "top 85%",
-            // once: true membuat animasi hanya jalan sekali sampai di-refresh
-            once: true,
+            start: "top 90%",
+            end: "top 20%",
+            scrub: 1,
+            onUpdate: (self) => {
+              // self.progress bernilai 0 sampai 1
+              // Jika sudah mencapai ujung (1), matikan scrub dan kunci posisinya
+              if (self.progress === 1) {
+                self.disable(); // Mematikan scrolltrigger sehingga tidak bisa balik
+                // Pastikan posisi tetap di akhir setelah didisable
+                gsap.set(element, { xPercent: 0 });
+              }
+            },
           },
-        },
-      );
+        });
+      };
 
-      // Animasi Hitam dari Kanan
-      gsap.fromTo(
-        blackContainerRef.current,
-        { xPercent: 120 },
-        {
-          xPercent: 0,
-          duration: 1.5, // Samakan durasi atau bedakan sedikit agar dinamis
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: projectRef.current,
-            start: "top 85%",
-            once: true, // Hanya sekali eksekusi
-          },
-        },
-      );
+      createLockingAnimation(whiteContainerRef.current, {
+        from: { xPercent: -150 },
+        to: { xPercent: 0 },
+      });
+
+      // Terapkan ke Kontainer Hitam
+      createLockingAnimation(blackContainerRef.current, {
+        from: { xPercent: 150 },
+        to: { xPercent: 0 },
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -217,14 +215,15 @@ export default function ExperienceSection() {
       {/* PROJECT SECTION DENGAN ANIMASI */}
       <div
         ref={projectRef}
-        className="bg-[#E5F581] relative overflow-hidden pt-20"
+        className="bg-[#E5F581] relative overflow-hidden pt-10 md:pt-20"
       >
         {/* Kontainer Putih (Miring) - Masuk dari Kiri */}
         <div
           ref={whiteContainerRef}
-          className="bg-white w-[130%] left-[-15%] rotate-[-4deg] flex justify-center items-end relative z-20 pt-16 shadow-lg"
+          className="bg-white w-[150%] md:w-[130%] left-[-25%] md:left-[-15%] rotate-[-4deg] flex justify-center items-end relative z-20 pt-10 md:pt-16 shadow-lg"
         >
-          <h1 className="text-8xl font-bold font-rubik text-black tracking-tighter">
+          {/* Penyesuaian text: text-5xl di mobile, text-8xl di desktop */}
+          <h1 className="text-5xl md:text-8xl font-bold font-rubik text-black tracking-tighter whitespace-nowrap pb-2">
             PROJECT PROJECT
           </h1>
         </div>
@@ -232,11 +231,12 @@ export default function ExperienceSection() {
         {/* Kontainer Hitam (Lurus/Background) - Masuk dari Kanan */}
         <div
           ref={blackContainerRef}
-          className="bg-black w-full  flex justify-end pt-32 relative z-10 -mt-16"
+          className="bg-black w-full flex justify-center md:justify-end pt-20 md:pt-32 relative z-10 -mt-10 md:-mt-16 pb-10 md:pb-20"
         >
-          <div className="flex gap-24 items-center pr-10">
-            <FaFolder size={96} className="text-white" />
-            <h1 className="text-8xl text-white font-bold font-rubik tracking-tighter">
+          {/* Gap diperkecil di mobile, icon juga mengecil */}
+          <div className="flex gap-6 md:gap-24 items-center px-6 md:pr-10">
+            <FaFolder className="text-white w-12 h-12 md:w-24 md:h-24" />
+            <h1 className="text-5xl md:text-8xl text-white font-bold font-rubik tracking-tighter">
               PROJECT
             </h1>
           </div>

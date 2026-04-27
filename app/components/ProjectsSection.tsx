@@ -262,15 +262,10 @@ export default function ProjectsSection() {
             </span>
           </button>
 
-          <div className="flex gap-2">
-            {[1, 2, 3].map((num) => (
-              <button
-                key={num}
-                className={`w-10 h-10 flex items-center justify-center border-2 border-black font-bold font-rubik shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all ${num === 1 ? "bg-[#E5F581]" : "bg-white hover:bg-zinc-100"}`}
-              >
-                {num}
-              </button>
-            ))}
+          <div className="flex items-center gap-3">
+            <div className="px-4 py-2 bg-[#E5F581] border-2 border-black font-bold font-rubik shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] uppercase text-sm">
+              Page 1 of 3
+            </div>
           </div>
 
           <button className="group flex items-center gap-3 px-6 py-3 bg-white border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all active:bg-[#E5F581]">

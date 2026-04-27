@@ -39,7 +39,6 @@ export default function TopNavBar() {
       "experience",
       "projects",
       "certificates",
-      "contact",
     ];
 
     sections.forEach((id) => {
@@ -78,7 +77,6 @@ export default function TopNavBar() {
       icon: <RiAwardLine size={20} />,
       href: "#certificates",
     },
-    { id: "contact", icon: <RiAtLine size={20} />, href: "#contact" },
   ];
 
   return (

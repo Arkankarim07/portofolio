@@ -92,7 +92,7 @@ export default function AboutSection() {
       <div className="container mx-auto px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Left: Text */}
-          <div className="space-y-12 py-24">
+          <div className="space-y-12 py-12">
             {/* Box Container */}
             <div
               className="about-box-container relative inline-block cursor-pointer"
@@ -155,7 +155,7 @@ export default function AboutSection() {
           </div>
 
           {/* Right: Lanyard */}
-          <div className="relative flex justify-center lg:justify-end pt-0">
+          <div className="hidden relative lg:flex justify-center lg:justify-end pt-0">
             {/* Anchor bar — tempat lanyard "menggantung" */}
             <div className="absolute top-0 left-1/2 lg:left-auto lg:right-0 -translate-x-1/2 lg:translate-x-0 w-3/4 lg:w-full h-3 bg-[#4A5043] border-2 border-black z-20" />
 
