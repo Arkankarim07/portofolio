@@ -5,6 +5,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Observer } from "gsap/Observer";
 import { RiCloseLine, RiZoomInLine, RiDownloadLine } from "react-icons/ri";
+import PreviewLightbox from "./PreviewLightbox";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger, Observer);
 
@@ -54,158 +56,6 @@ const certificates = [
 ];
 
 type Certificate = (typeof certificates)[number];
-
-function CertificateLightbox({
-  cert,
-  onClose,
-}: {
-  cert: Certificate;
-  onClose: () => void;
-}) {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  // Animate IN
-  useEffect(() => {
-    const tl = gsap.timeline();
-
-    tl.fromTo(
-      overlayRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.3, ease: "power2.out" },
-    ).fromTo(
-      panelRef.current,
-      { y: 40, opacity: 0, scale: 0.95 },
-      { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.4)" },
-      "-=0.15",
-    );
-  }, []);
-
-  // Animate OUT then call onClose
-  const handleClose = () => {
-    const tl = gsap.timeline({ onComplete: onClose });
-    tl.to(panelRef.current, {
-      y: 30,
-      opacity: 0,
-      scale: 0.96,
-      duration: 0.25,
-      ease: "power2.in",
-    }).to(overlayRef.current, { opacity: 0, duration: 0.2 }, "-=0.1");
-  };
-
-  // Close on backdrop click
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === overlayRef.current) handleClose();
-  };
-
-  // Close on Escape key
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
-  // Prevent body scroll while modal open
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, []);
-
-  return (
-    <div
-      ref={overlayRef}
-      onClick={handleBackdropClick}
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-10"
-      style={{
-        background: "rgba(10, 18, 2, 0.92)",
-        backdropFilter: "blur(6px)",
-      }}
-    >
-      <div
-        ref={panelRef}
-        className="relative w-full max-w-[340px] sm:max-w-[520px] md:max-w-[820px] max-h-[90vh] flex flex-col"
-      >
-        {/* Neubrutalism shadow block */}
-        <div className="absolute inset-0 bg-black translate-x-[6px] translate-y-[6px] -z-10" />
-
-        {/* Panel */}
-        <div className="bg-[#1a2408] border-2 border-[#D4EF7D]/60 overflow-hidden flex flex-col">
-          {/* ── Top bar ── */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[#D4EF7D]/10">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-[#D4EF7D]/40 text-[10px] italic tracking-widest">
-                {cert.number}
-              </span>
-              <span className="font-mono text-[#D4EF7D] text-[10px] font-bold tracking-widest uppercase">
-                {cert.category}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              {/* Download button */}
-              <a
-                href={cert.image}
-                download
-                className="flex items-center gap-1.5 px-3 py-1.5 border border-[#D4EF7D]/20 text-[#D4EF7D]/50 hover:text-[#D4EF7D] hover:border-[#D4EF7D]/50 transition-all font-mono text-[9px] uppercase tracking-widest"
-              >
-                <RiDownloadLine size={13} />
-                <span className="hidden sm:inline">Save</span>
-              </a>
-              {/* Close button */}
-              <button
-                onClick={handleClose}
-                className="flex items-center justify-center w-8 h-8 border border-[#D4EF7D]/20 text-[#D4EF7D]/50 hover:text-white hover:border-white/40 hover:bg-white/5 transition-all"
-              >
-                <RiCloseLine size={18} />
-              </button>
-            </div>
-          </div>
-
-          {/* ── Image area ── */}
-          <div
-            className="relative overflow-auto bg-black/40 flex items-center justify-center"
-            style={{ maxHeight: "calc(90vh - 120px)" }}
-          >
-            <img
-              ref={imgRef}
-              src={cert.image}
-              alt={cert.title}
-              className="w-full h-auto object-contain select-none"
-              draggable={false}
-            />
-
-            {/* Number watermark */}
-            <span
-              className="absolute bottom-3 right-4 font-black text-[#D4EF7D]/10 italic pointer-events-none select-none"
-              style={{ fontSize: "clamp(48px, 10vw, 80px)" }}
-            >
-              {cert.number}
-            </span>
-          </div>
-
-          {/* ── Bottom bar ── */}
-          <div className="flex items-center justify-between px-4 py-3 border-t border-[#D4EF7D]/10">
-            <h3 className="text-white font-bold text-xs sm:text-sm uppercase tracking-wide leading-tight truncate pr-4">
-              {cert.title}
-            </h3>
-            <span className="flex-shrink-0 text-[#D4EF7D] text-[9px] font-bold border border-[#D4EF7D]/30 px-2 py-1 uppercase tracking-widest">
-              {cert.tag}
-            </span>
-          </div>
-        </div>
-
-        {/* ESC hint */}
-        <p className="text-center mt-3 font-mono text-[9px] text-white/20 tracking-widest uppercase">
-          Press ESC or click outside to close
-        </p>
-      </div>
-    </div>
-  );
-}
 
 // ─────────────────────────────────────────────
 // Main Section
@@ -310,8 +160,9 @@ export default function CertificatesSection() {
     <>
       {/* ── Lightbox ── */}
       {selectedCert && (
-        <CertificateLightbox
-          cert={selectedCert}
+        <PreviewLightbox
+          item={selectedCert}
+          type="certificate"
           onClose={() => setSelectedCert(null)}
         />
       )}
@@ -375,10 +226,12 @@ export default function CertificatesSection() {
                   <div className="bg-[#2C3515] border-2 border-black overflow-hidden shadow-2xl">
                     {/* Image */}
                     <div className="aspect-[4/3] relative bg-black overflow-hidden">
-                      <img
+                      <Image
                         src={cert.image}
                         alt={cert.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 320px"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <span className="absolute bottom-2 right-3 text-4xl md:text-5xl font-black text-[#D4EF7D]/20 italic pointer-events-none">
                         {cert.number}
@@ -504,8 +357,8 @@ export default function CertificatesSection() {
         >
           {[
             { num: "6", label: "Certificates" },
-            { num: "2024", label: "Latest Year" },
-            { num: "100%", label: "Verified" },
+            { num: "2025", label: "Latest Year" },
+            // { num: "100%", label: "Verified" },
           ].map((item, i, arr) => (
             <div key={i} className="flex items-center gap-4 sm:gap-8">
               <div className="text-center">

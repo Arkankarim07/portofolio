@@ -66,14 +66,27 @@ export default function HeroSection() {
 
           <div className="flex gap-4">
             {[
-              { icon: <FaGithub size={22} />, label: "GitHub" },
-              { icon: <FaLinkedin size={22} />, label: "LinkedIn" },
-              { icon: <FaInstagram size={22} />, label: "Instagram" },
+              {
+                icon: <FaGithub size={22} />,
+                label: "GitHub",
+                href: "https://github.com/Arkankarim07",
+              },
+              {
+                icon: <FaLinkedin size={22} />,
+                label: "LinkedIn",
+                href: "https://www.linkedin.com/in/muhammad-arkan-karim-647b72364?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+              },
+              {
+                icon: <FaInstagram size={22} />,
+                label: "Instagram",
+                href: "https://www.instagram.com/rkannno_?igsh=MXo4MmdyYndwbmhn",
+              },
             ].map((social, index) => (
               <a
                 key={index}
                 className="w-12 h-12 flex bg-[#E5F581] text-black items-center justify-center border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
-                href="#!"
+                href={social.href}
+                target="_blank"
                 aria-label={social.label}
               >
                 {social.icon}
@@ -99,10 +112,13 @@ export default function HeroSection() {
         {/* CENTER CHARACTER / FOTO (Urutan 3 di Mobile, Urutan 2 di Desktop) */}
         <div className="lg:col-span-4 flex justify-center relative group order-3 lg:order-2">
           <div className="relative w-full aspect-square max-w-md">
-            <img
-              alt=""
-              className="w-full h-full object-contain filter md:grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
+            <Image
+              alt="Hero Image"
               src="/tes.jpeg"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="object-contain filter md:grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
             />
             <div className="bg-[#E5F581] font-rubik absolute -bottom-4 -right-4 bg-primary text-black px-6 py-2 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] header-font text-sm rotate-3 group-hover:rotate-0 transition-all">
               AVAILABLE FOR WORK

@@ -3,21 +3,21 @@ import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 const socialLinks = [
   {
     label: "GITHUB",
-    href: "#!",
     icon: <FaGithub size={25} />,
     bg: "bg-gray-700",
+    href: "https://github.com/Arkankarim07",
   },
   {
     label: "LINKEDIN",
-    href: "#!",
     icon: <FaLinkedin size={25} />,
     bg: "bg-blue-600",
+    href: "https://www.linkedin.com/in/muhammad-arkan-karim-647b72364?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
   },
   {
     label: "INSTAGRAM",
-    href: "#!",
     icon: <FaInstagram size={25} />,
     bg: "bg-purple-600",
+    href: "https://www.instagram.com/rkannno_?igsh=MXo4MmdyYndwbmhn",
   },
 ];
 
@@ -48,6 +48,7 @@ export default function Footer() {
             <a
               key={link.label}
               href={link.href}
+              target="_blank"
               className="header-font hover:text-[#D4EF7D] font-rubik italic transition"
             >
               {link.label}

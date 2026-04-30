@@ -60,7 +60,7 @@ export default function IntroScreen({ onComplete }: IntroScreenProps) {
       tl.to(
         {},
         {
-          duration: 1.6,
+          duration: 1.2,
           onUpdate: function () {
             const p = Math.round(this.progress() * 100);
             if (counterRef.current) {
@@ -76,7 +76,7 @@ export default function IntroScreen({ onComplete }: IntroScreenProps) {
         barRef.current,
         {
           width: "100%",
-          duration: 1.6,
+          duration: 1.2,
           ease: "power1.inOut",
         },
         0.9,

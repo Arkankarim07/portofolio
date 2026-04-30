@@ -9,8 +9,11 @@ import {
   RiGlobalLine,
   RiCloseLine,
   RiZoomInLine,
+  RiGlobalFill,
 } from "react-icons/ri";
 import { BiCalendar } from "react-icons/bi";
+import Image from "next/image";
+import PreviewLightbox from "./PreviewLightbox";
 
 // ─── DATA PROJECTS ───
 const projectsData = [
@@ -21,6 +24,8 @@ const projectsData = [
     period: "January 2026",
     tags: ["Flutter", "SQL", "Node.JS", "Python Scraping", "Tailwind"],
     category: "MOBILE",
+    link: "https://github.com/Arkankarim07/AppTugasVclass",
+    active: false,
     desc: "The application was created for task reminders, where the data can come from posts and also automation by scraping to the campus website (Vclass)",
     offset: false,
   },
@@ -31,6 +36,8 @@ const projectsData = [
     period: "Juny 2025",
     tags: ["Flutter", "Tailwind", "Next.JS", "SQL"],
     category: "MOBILE",
+    link: "https://github.com/Arkankarim07/quizzEnglish",
+    active: false,
     desc: "Application for English quizzes, in multiple choice format",
     offset: true,
   },
@@ -41,6 +48,8 @@ const projectsData = [
     period: "May 2025",
     tags: ["Python", "Roboflow", "Ultralytics", "ESP-32", "React JS", "SQL"],
     category: "COMP SCIENCE",
+    link: "https://github.com/Arkankarim07/humanDetect",
+    active: false,
     desc: "application to detect humans and forklifts using a camera, using a dataset from Roboflow, and if detected will send a signal to the ESP-32",
     offset: false,
   },
@@ -51,6 +60,8 @@ const projectsData = [
     period: "June 2025",
     tags: ["PHP", "Laravel", "SQL", "Tailwind"],
     category: "WEB",
+    link: "https://github.com/Arkankarim07/lara-perpus",
+    active: false,
     desc: "Highly interactive agency website with smooth GSAP animations and neubrutalism style.",
     offset: false,
   },
@@ -61,6 +72,8 @@ const projectsData = [
     period: "January 2025",
     tags: ["Tailwind", "React JS", "Chart.JS"],
     category: "WEB",
+    link: "https://github.com/Arkankarim07/wh-visual",
+    active: false,
     desc: "application for monitoring stock in the warehouse, I only made the interface display (not using real data), this project was given during an internship at Denso",
     offset: true,
   },
@@ -71,115 +84,14 @@ const projectsData = [
     period: "January 2025",
     tags: ["Tailwind", "Laravel", "SQL", "InstanScan"],
     category: "WEB",
+    link: "https://github.com/Arkankarim07/absenscanqr",
+    active: false,
     desc: "Application for automatic attendance using barcode scanning, barcode scanning is filled with NIs, class ID and department ID, divided into 2 pages, namely for students and teachers, students have their QR code while teachers have their cameras",
     offset: true,
   },
 ];
 
 const filterButtons = ["MOBILE", "WEB", "COMP SCIENCE"];
-
-// ─── COMPONENT: PROJECT LIGHTBOX (GAYA SERTIFIKAT) ───
-function ProjectLightbox({
-  project,
-  onClose,
-}: {
-  project: any;
-  onClose: () => void;
-}) {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const tl = gsap.timeline();
-    tl.fromTo(
-      overlayRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.3, ease: "power2.out" },
-    ).fromTo(
-      panelRef.current,
-      { y: 40, opacity: 0, scale: 0.95 },
-      { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.4)" },
-      "-=0.15",
-    );
-
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, []);
-
-  const handleClose = () => {
-    const tl = gsap.timeline({ onComplete: onClose });
-    tl.to(panelRef.current, {
-      y: 30,
-      opacity: 0,
-      scale: 0.96,
-      duration: 0.25,
-      ease: "power2.in",
-    }).to(overlayRef.current, { opacity: 0, duration: 0.2 }, "-=0.1");
-  };
-
-  return (
-    <div
-      ref={overlayRef}
-      onClick={(e) => e.target === overlayRef.current && handleClose()}
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8"
-      style={{ background: "rgba(0, 0, 0, 0.9)", backdropFilter: "blur(8px)" }}
-    >
-      <div
-        ref={panelRef}
-        className="relative w-full max-w-5xl max-h-[90vh] flex flex-col"
-      >
-        {/* Shadow Effect */}
-        <div className="absolute inset-0 bg-black translate-x-2 translate-y-2 -z-10" />
-
-        <div className="bg-white border-[3px] border-black overflow-hidden flex flex-col">
-          {/* Header Lightbox */}
-          <div className="flex items-center justify-between px-5 py-3 border-b-[3px] border-black bg-[#E5F581]">
-            <h3 className="font-black text-black uppercase tracking-tighter text-sm md:text-lg">
-              Project Preview: {project.title}
-            </h3>
-            <button
-              onClick={handleClose}
-              className="p-1 hover:rotate-90 transition-transform duration-300"
-            >
-              <RiCloseLine size={28} className="text-black" />
-            </button>
-          </div>
-
-          {/* Image Container */}
-          <div
-            className="overflow-auto bg-zinc-100 p-2 flex justify-center items-center"
-            style={{ maxHeight: "calc(80vh - 100px)" }}
-          >
-            <img
-              src={project.image}
-              alt={project.title}
-              className="max-w-full h-auto border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] select-none"
-            />
-          </div>
-
-          {/* Footer Lightbox */}
-          <div className="p-4 md:p-6 bg-white border-t-[3px] border-black flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-col">
-              <span className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">
-                {project.category}
-              </span>
-              <p className="text-zinc-600 text-xs md:text-sm max-w-2xl">
-                {project.desc}
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <button className="px-4 py-2 bg-black text-white font-bold text-xs flex items-center gap-2 border-2 border-black hover:bg-[#4A5043] transition-colors shadow-[3px_3px_0px_0px_rgba(229,245,129,1)]">
-                <RiGithubLine size={16} /> CODE
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // ─── MAIN SECTION COMPONENT ───
 export default function ProjectsSection() {
@@ -246,8 +158,9 @@ export default function ProjectsSection() {
     <>
       {/* Lightbox Overlay */}
       {selectedProject && (
-        <ProjectLightbox
-          project={selectedProject}
+        <PreviewLightbox
+          item={selectedProject}
+          type="project"
           onClose={() => setSelectedProject(null)}
         />
       )}
@@ -321,10 +234,12 @@ export default function ProjectsSection() {
                     className="h-48 md:h-64 overflow-hidden border-b-2 border-black bg-zinc-200 relative cursor-zoom-in"
                     onClick={() => setSelectedProject(project)}
                   >
-                    <img
+                    <Image
                       alt={project.alt}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       src={project.image}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     {/* Hover Zoom Overlay */}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -342,7 +257,7 @@ export default function ProjectsSection() {
                       </h3>
                       <div className="flex shrink-0 gap-1.5 p-1.5 md:p-2 items-center bg-white text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                         <BiCalendar size={14} />
-                        <span className="text-[9px] md:text-[10px] font-bold whitespace-nowrap">
+                        <span className="text-[9px] md:text-[10px] font-lexend font-bold whitespace-nowrap">
                           {project.period}
                         </span>
                       </div>
@@ -365,20 +280,24 @@ export default function ProjectsSection() {
                     </p>
 
                     {/* Buttons */}
-                    <div className="flex gap-3 pt-2 mt-auto">
-                      <button
-                        onClick={() => setSelectedProject(project)}
-                        className="flex-1 flex items-center justify-center gap-1.5 md:gap-2 py-2.5 md:py-3 bg-[#E5F581] text-black border-[3px] border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] font-bold text-xs md:text-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
-                      >
-                        <RiZoomInLine size={18} />
-                        <span>PREVIEW</span>
-                      </button>
+                    <div className="flex gap-3 font-rubik pt-2 mt-auto">
                       <a
-                        className="flex-1 flex items-center justify-center gap-1.5 md:gap-2 py-2.5 md:py-3 bg-black text-white border-[3px] border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] font-bold text-xs md:text-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
-                        href="#"
+                        className="flex-1 flex items-center justify-center gap-1.5 md:gap-2 py-2.5 md:py-3 bg-black text-white border-[3px] border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] font-semibold text-xs md:text-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
                         <RiGithubLine size={18} />
                         <span>GITHUB</span>
+                      </a>
+                      <a
+                        className={`flex-1  flex items-center justify-center gap-1.5 md:gap-2 py-2.5 md:py-3 ${project.active ? "bg-[#22C55E] text-white border-[3px] border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]" : "bg-gray-400 text-gray-600 border-[3px] border-gray-400 cursor-not-allowed"} font-semibold text-xs md:text-sm transition-all ${project.link ? "hover:translate-x-1 hover:translate-y-1 hover:shadow-none" : ""}`}
+                        href={project.link || "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <RiGlobalLine size={18} />
+                        <span>LIVE</span>
                       </a>
                     </div>
                   </div>
