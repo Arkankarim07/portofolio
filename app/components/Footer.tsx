@@ -48,7 +48,6 @@ export default function Footer() {
             <a
               key={link.label}
               href={link.href}
-              target="_blank"
               className="header-font hover:text-[#D4EF7D] font-rubik italic transition"
             >
               {link.label}

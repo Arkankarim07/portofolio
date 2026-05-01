@@ -65,19 +65,21 @@ export default function AboutSection() {
       });
 
       // Text Reveal Animation
-      const textElements = textContainerRef.current.children;
-      gsap.from(textElements, {
-        y: 40,
-        opacity: 0,
-        skewY: 2,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power4.out",
-        scrollTrigger: {
-          trigger: textContainerRef.current,
-          start: "top 85%",
-        },
-      });
+      if (textContainerRef.current) {
+        const textElements = (textContainerRef.current as HTMLElement).children;
+        gsap.from(textElements, {
+          y: 40,
+          opacity: 0,
+          skewY: 2,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: textContainerRef.current,
+            start: "top 85%",
+          },
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -117,7 +119,7 @@ export default function AboutSection() {
                   <RiUser3Fill className="text-black" size={40} />
                 </div>
                 <p className="text-black text-xl font-medium italic select-none">
-                  "Full of yapping about myself"
+                  &quot;The human behind the code.&quot;
                 </p>
               </div>
             </div>
@@ -146,10 +148,12 @@ export default function AboutSection() {
 
               {/* Animasi tambahan: Link/Button hover effect */}
               <div className="pt-4 overflow-hidden">
-                <button className="group relative px-6 py-3 font-bold text-black border-2 border-black bg-white hover:bg-black hover:text-white transition-colors duration-300">
-                  Download CV
-                  <span className="absolute inset-0 translate-x-1 translate-y-1 border-2 border-black -z-10 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform" />
-                </button>
+                <a href="/assets/cv/Muhammad Arkan Karim CV.pdf" download>
+                  <button className="group relative px-6 py-3 font-bold text-black border-2 border-black bg-white hover:bg-black hover:text-white transition-colors duration-300">
+                    Download CV
+                    <span className="absolute inset-0 translate-x-1 translate-y-1 border-2 border-black -z-10 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform" />
+                  </button>
+                </a>
               </div>
             </div>
           </div>

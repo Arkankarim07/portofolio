@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Observer } from "gsap/Observer";
-import { RiCloseLine, RiZoomInLine, RiDownloadLine } from "react-icons/ri";
+import { RiZoomInLine } from "react-icons/ri";
 import PreviewLightbox from "./PreviewLightbox";
 import Image from "next/image";
 
@@ -117,6 +117,7 @@ export default function CertificatesSection() {
         });
       }
 
+      if (!card) return;
       const inner = card.querySelector(".inner-card");
       gsap.to(inner, {
         filter: i === index ? "grayscale(0%)" : "grayscale(100%) blur(2px)",

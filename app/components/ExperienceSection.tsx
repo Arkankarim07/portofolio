@@ -70,7 +70,7 @@ export default function ExperienceSection() {
       });
 
       const createLockingAnimation = (element, vars) => {
-        let anim = gsap.fromTo(element, vars.from, {
+        const anim = gsap.fromTo(element, vars.from, {
           ...vars.to,
           scrollTrigger: {
             trigger: projectRef.current,

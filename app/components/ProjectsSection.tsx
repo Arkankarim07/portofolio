@@ -7,9 +7,7 @@ import {
   RiArrowRightSLine,
   RiGithubLine,
   RiGlobalLine,
-  RiCloseLine,
   RiZoomInLine,
-  RiGlobalFill,
 } from "react-icons/ri";
 import { BiCalendar } from "react-icons/bi";
 import Image from "next/image";
@@ -97,11 +95,14 @@ const filterButtons = ["MOBILE", "WEB", "COMP SCIENCE"];
 export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("MOBILE");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  type ProjectData = (typeof projectsData)[0];
+  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(
+    null,
+  );
 
   const itemsPerPage = 2; // Jumlah project per halaman
-  const projectTitleRef = useRef(null);
-  const projectShadowRef = useRef(null);
+  const projectTitleRef = useRef<HTMLDivElement>(null);
+  const projectShadowRef = useRef<HTMLDivElement>(null);
 
   // Filter Logic
   const filteredProjects =
@@ -115,11 +116,6 @@ export default function ProjectsSection() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
-
-  // Reset page when filter changes
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [activeFilter]);
 
   // GSAP Title Animations
   const onProjectHover = () => {
@@ -203,7 +199,10 @@ export default function ProjectsSection() {
               {filterButtons.map((label) => (
                 <button
                   key={label}
-                  onClick={() => setActiveFilter(label)}
+                  onClick={() => {
+                    setActiveFilter(label);
+                    setCurrentPage(1);
+                  }}
                   className={`
                     flex-shrink-0 px-4 py-2 md:px-5 md:py-2.5 font-rubik font-black text-[10px] md:text-xs uppercase tracking-widest border-[3px] border-black transition-all duration-200 cursor-pointer select-none relative shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] active:scale-95
                     ${activeFilter === label ? "bg-[#E5F581] text-black" : "bg-white text-black hover:bg-[#4A5043] hover:text-white"}
